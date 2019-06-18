@@ -1,0 +1,80 @@
+@charset "ISO-8859-1";
+
+#headermanu {
+	display: table;
+}
+#headermanu div {
+	display: inline-block;
+	padding-right: 30px;
+}
+img {
+	size: 25px;
+}
+a:link {
+	color: blue;
+	text-decoration: none;
+}
+a:visited {
+	color: indigo;
+}
+a:hover {
+	color: blue;
+	text-decoration: underline;
+	
+}
+a:active {
+	color: red;
+}
+#headermanu a:link {
+	font-size: larger;
+}
+.pageheading {
+	color: darkblue;
+}
+table {
+	border: 1px solid black;
+	border-collapse: collapse; 
+}
+th,td {
+	padding: 10px;
+}
+th {
+	background: darkblue;
+	color: cornsilk;
+	font-size: larger;
+}
+table.from{
+	border: none;
+	padding: 4px;
+}
+button {
+	border-radius: 6px;
+}
+button[type=submit] {
+	font-weight: bold;
+	color: green;
+}
+button:hover {
+	color: green;
+}
+input {
+	border: 1px solid;
+	border-radius: 4px;
+	border-color: green;
+	height: 25px;
+}
+.massage{
+	font-style: italic;
+	 color: #800000;
+}
+.error {
+	color: red;
+	margin: 5px;
+	font-weight: bold;
+	font-style: italic;
+}
+.errormsg {
+	color: red;
+	font-style: italic;
+	
+}
