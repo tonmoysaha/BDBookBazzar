@@ -11,21 +11,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bookbazzar.dao.BookDAO;
 import com.bookbazzar.dao.CategoryDAO;
 import com.bookbazzar.entity.Category;
 
 public class CategoryService {
-	private EntityManager entityManager;
+	
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private CategoryDAO categoryDAO;
 	
-	public CategoryService(EntityManager entityManager,HttpServletRequest request, HttpServletResponse response) {
+	public CategoryService(HttpServletRequest request, HttpServletResponse response) {
 		super();
 		this.request = request;
 		this.response = response;
-		this.entityManager =entityManager;
-		categoryDAO = new CategoryDAO(entityManager);
+		
+		categoryDAO = new CategoryDAO();
 	}
 	public void listCategory() throws ServletException, IOException {
 		listCategory(null);
@@ -106,21 +107,28 @@ public class CategoryService {
 	public void deleteCategory() throws ServletException, IOException {
 		int categoryId = Integer.parseInt(request.getParameter("id"));
 		Category category =categoryDAO.get(categoryId);
+		String massage;
 		if (category == null) {
-			String massage="Could not Delete the Category"+" "+"This Category with this ID: "+categoryId+" is not found";
+			massage="Could not Delete the Category"+" "+"This Category with this ID: "+categoryId+" is not found";
 			request.setAttribute("message", massage);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 			requestDispatcher.forward(request, response);
-		}else {
-			categoryDAO.delete(categoryId);
-			String massage= "This Category with this ID: "+categoryId+" is delected successfully";
-			listCategory(massage);
+			return;
 		}
 		
+		BookDAO bookDAO = new BookDAO();
+		long numberOfBooks = bookDAO.countByCategory(categoryId);
 		
-	}
-
-
-	
+		if (numberOfBooks > 0) {
+			massage = "could not delete the category with this Id : "+categoryId+"beacause its contain (%d) Books ";
+			massage = String.format(massage, numberOfBooks);
+			
+		}else {
+				 categoryDAO.delete(categoryId);
+				 massage= "This Category with this ID: "+categoryId+" is delected successfully";				
+			}
+		  listCategory(massage);
+		}
+		
 
 }

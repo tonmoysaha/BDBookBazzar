@@ -11,20 +11,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bookbazzar.dao.HashGenerator;
 import com.bookbazzar.dao.userDAO;
 import com.bookbazzar.entity.Users;
 
 public class UserServices {
-	private EntityManager entityManager;
+
 	private userDAO userDAO;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
-	public UserServices(EntityManager entityManager, HttpServletRequest request, HttpServletResponse response) {
+	public UserServices(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
-		this.entityManager = entityManager;
-		userDAO = new userDAO(entityManager);
+		
+		userDAO = new userDAO();
 	}
 
 	public void listUser() throws ServletException, IOException {
@@ -78,7 +79,7 @@ public class UserServices {
 		} else {
 			user.getEmail();
 			user.getFullname();
-			user.getPassword();
+			user.setPassword(null);
 			request.setAttribute("user", user);
 			String upadateuser = "user_form.jsp";
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher(upadateuser);
@@ -102,10 +103,15 @@ public class UserServices {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 			requestDispatcher.forward(request, response);
 		} else {
-			Users user = new Users(userId, email, fullName, password);
-			userDAO.update(user);
-			String message = "User has been Updated successfully";
-			listUser(message);
+			if (password != null & !password.isEmpty()) {
+				String encryptedPassword = HashGenerator.generateMD5(password);	
+				
+				Users user = new Users(userId, email, fullName, encryptedPassword);
+				userDAO.update(user);
+				String message = "User has been Updated successfully";
+				listUser(message);
+			}
+			
 		}
 
 	}

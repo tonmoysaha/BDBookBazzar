@@ -14,7 +14,7 @@ import com.bookbazzar.service.CategoryService;
  * Servlet implementation class DeleteServletCategory
  */
 @WebServlet("/admin/delete_category")
-public class DeleteServletCategory extends BaseServlet {
+public class DeleteServletCategory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
     public DeleteServletCategory() {
@@ -23,7 +23,7 @@ public class DeleteServletCategory extends BaseServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CategoryService categoryService = new CategoryService(entityManager, request, response);
+		CategoryService categoryService = new CategoryService(request, response);
 		categoryService.deleteCategory();
 	}
 

@@ -10,12 +10,13 @@ import com.bookbazzar.entity.Users;
 
 public class userDAO extends jpaDAO<Users> implements GenericDAO<Users> {
 
-	public userDAO(EntityManager entityManager) {
-		super(entityManager);
+	public userDAO() {
 
 	}
-
+    @Override
 	public Users create(Users user) {
+		String encryptedPassword = HashGenerator.generateMD5(user.getPassword());
+		user.setPassword(encryptedPassword);
 		return super.create(user);
 	}
 
@@ -59,8 +60,9 @@ public class userDAO extends jpaDAO<Users> implements GenericDAO<Users> {
 
 	public boolean checkLogin(String email, String password) {
 		Map<String, Object> parameters = new HashMap<String, Object>();
+		String encryptedPassword = HashGenerator.generateMD5(password);
 		parameters.put("email", email);
-		parameters.put("password", password);
+		parameters.put("password", encryptedPassword);
 		List<Users> listUsers = super.findWithNamedQery("Users.checkLogin", parameters);
 		if (listUsers.size() == 1) {
 			return true;

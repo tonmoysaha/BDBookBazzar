@@ -1,16 +1,38 @@
 
 <!-- Header part -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<div align="center">
 
+<div class="center">
+    <a href="${pageContext.request.contextPath}/">
 	<img src="images/BookstoreLogo.png">
+	</a>
 	
 </div>
 <div align="center">
-	<input type="text" name="keyword" size="50"> <input
-		type="submit" value="search">
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="login">Sign In</a>
-	<a href="register">Registration</a> <a href="view_cart">Shopping
+    <br>
+    <br>
+    <form action="search" method="get">
+    <input type="text" name="keyword" size="50"> <input
+	type="submit" value="search">
+    </form>
+	
+	&nbsp;&nbsp;&nbsp;
+	<c:if test="${loggedcustomer == null}">
+	<a href="login">Sign In</a>
+	 &nbsp;
+	<a href="register">Registration</a> 
+	&nbsp;
+	</c:if>
+	<c:if test="${loggedcustomer != null}">
+	<a href="view_profile">Welcome , ${loggedcustomer.fullname}</a>
+	 &nbsp;
+	<a href="view_orders">My Orders</a> 
+	&nbsp;
+	<a href="logout">Log Out</a>
+	&nbsp;
+	</c:if>
+	 
+	<a href="view_cart">Shopping
 		Cart</a>
 
 </div>

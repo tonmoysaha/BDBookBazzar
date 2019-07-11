@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bookbazzar.controller.BaseServlet;
+import com.bookbazzar.dao.BookDAO;
 import com.bookbazzar.dao.CategoryDAO;
+import com.bookbazzar.entity.Book;
 import com.bookbazzar.entity.Category;
 
 /**
@@ -31,9 +33,12 @@ public class HomeServlet extends BaseServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		CategoryDAO categoryDAO = new CategoryDAO(entityManager);
-		List<Category> listCategory = categoryDAO.listAll();
-		request.setAttribute("listCategory", listCategory);
+		CategoryDAO categoryDAO = new CategoryDAO();
+		
+		BookDAO bookDAO = new BookDAO();
+		List<Book> listNewBooks = bookDAO.listNewBooks();
+		
+		request.setAttribute("listNewBooks", listNewBooks);
 		
 		String homepage = "frontend/index.jsp";
 		RequestDispatcher dispatchar= request.getRequestDispatcher(homepage);

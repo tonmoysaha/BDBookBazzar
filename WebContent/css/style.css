@@ -46,6 +46,7 @@ th {
 table.from{
 	border: none;
 	padding: 4px;
+	width: 60%;
 }
 button {
 	border-radius: 6px;
@@ -63,7 +64,7 @@ input {
 	border-color: green;
 	height: 25px;
 }
-.massage{
+.massage {
 	font-style: italic;
 	 color: #800000;
 }
@@ -77,4 +78,33 @@ input {
 	color: red;
 	font-style: italic;
 	
+}
+.booklistfrontend {
+	display: inline-block;
+	margin: 12px;
+}
+div.center {
+	text-align: center;
+}
+div.book {
+	display: inline-block;
+	margin: 20px;
+	text-align: center;
+}
+table.book {
+	width: 80%;
+	border: 0;
+	margin: 0 auto;
+}
+div.book_group {
+	width: 80%;
+	margin: 0 auto;
+}
+div.next-row {
+	clear: both;
+}
+img.book-small {
+	width: 128px;
+	height: 164px;
+
 }

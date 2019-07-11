@@ -14,26 +14,26 @@ import org.junit.Test;
 
 import com.bookbazzar.entity.Category;
 
-public class categoryDAOTest extends BaseDAOTest {
+public class categoryDAOTest {
 
 	private static CategoryDAO categoryDAO;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BaseDAOTest.setUpBeforeClass();
-		categoryDAO = new CategoryDAO(entityManager);
+	
+		categoryDAO = new CategoryDAO();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		BaseDAOTest.tearDownAfterClass();
+		categoryDAO.close();
 
 	}
 
 	@Test
 	public void testCreateCategory() {
 		Category category = new Category();
-		category.setName("Politics");
+		category.setName("Health");
 		category = categoryDAO.create(category);
 		assertTrue(category != null && category.getCategoryId() > 0);
 	}

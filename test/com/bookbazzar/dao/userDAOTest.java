@@ -16,13 +16,13 @@ import org.junit.Test;
 
 import com.bookbazzar.entity.Users;
 
-public class userDAOTest extends BaseDAOTest {
+public class userDAOTest {
 	private static userDAO userDAO;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		BaseDAOTest.setUpBeforeClass();
-		userDAO = new userDAO(entityManager);
+		
+		userDAO = new userDAO();
 	}
 
 	@Test
@@ -96,7 +96,7 @@ public class userDAOTest extends BaseDAOTest {
 	public void testListAllUser() {
 		List<Users> listusers = userDAO.listAll();
 		for (Users users : listusers) {
-			System.out.println(users.getEmail());
+			System.out.println(users.getEmail()+ users.getPassword());
 		}
 		assertTrue(listusers.size() > 0);
 
@@ -106,7 +106,7 @@ public class userDAOTest extends BaseDAOTest {
 	public void testCountAll() {
 		long totallusers = userDAO.count();
 
-		assertEquals(8, totallusers);
+		assertTrue(totallusers > 0);
 
 	}
 
@@ -134,9 +134,18 @@ public class userDAOTest extends BaseDAOTest {
 		assertFalse(loginresult);
 		
 	}
+	@Test
+	public void testGenerateMD5() {
+		String password = "9999";
+		String encryptedPassword = HashGenerator.generateMD5(password);
+		
+		System.out.println(encryptedPassword);
+		
+		assertTrue(true);
+	}
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		BaseDAOTest.tearDownAfterClass();
+		userDAO.close();
 	}
 
 }

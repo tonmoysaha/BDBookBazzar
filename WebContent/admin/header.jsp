@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div align="center">
 	<div>
+	    <a href="${pageContext.request.contextPath}/admin/">
 		<img src="../images/BookstoreAdminLogo.png">
+		</a>
 	</div>
 	<div>
 		<h3>
@@ -18,11 +20,11 @@
 						src="../images/category.png" /><br />Categories</a>
 				</div>
 				<div class="menu_item">
-					<a href="books"><img alt="books" src="../images/book.jpg" /><br />Books</a>
+					<a href="books_list"><img alt="books" src="../images/book.jpg" /><br />Books</a>
 				</div>
 
 				<div>
-					<a href="customers"><img alt="customer"
+					<a href="list_customer"><img alt="customer"
 						src="../images/customer.png" /><br />Customers</a>
 				</div>
 

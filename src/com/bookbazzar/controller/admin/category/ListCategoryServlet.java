@@ -12,7 +12,7 @@ import com.bookbazzar.service.CategoryService;
 
 
 @WebServlet("/admin/list_categorys")
-public class ListCategoryServlet extends BaseServlet {
+public class ListCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
   
@@ -23,7 +23,7 @@ public class ListCategoryServlet extends BaseServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       CategoryService categoryService = new CategoryService(entityManager,request, response);
+       CategoryService categoryService = new CategoryService(request, response);
        categoryService.listCategory();
 	}
 

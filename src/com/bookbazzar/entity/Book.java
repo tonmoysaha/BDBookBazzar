@@ -1,6 +1,7 @@
 package com.bookbazzar.entity;
 // Generated Feb 13, 2019 12:46:01 PM by Hibernate Tools 5.2.11.Final
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,10 +13,13 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -23,6 +27,19 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
+@NamedQueries({
+	@NamedQuery(name = "findAll.Book" , query ="SELECT b FROM Book b"),
+	@NamedQuery(name = "Book.findByTitle" , query = "SELECT b FROM Book b WHERE b.title = :title"),
+	@NamedQuery(name = "Book.countAll" , query = "SELECT COUNT(*) FROM Book b"),
+	@NamedQuery(name = "Book.countByCategory" , query = "SELECT COUNT(b) FROM Book b "
+	 +"WHERE b.category.categoryId = :catId"),
+	
+	@NamedQuery(name="Book.findByCategory" , query="SELECT b FROM Book b JOIN "+
+	"Category c ON b.category.categoryId = c.categoryId AND c.categoryId = :catId"),
+	@NamedQuery(name="Book.newBookList" , query="SELECT b FROM Book b ORDER BY b.publishDate DESC"),
+	@NamedQuery(name="Book.search",query="SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%'" 
+	+ " OR b.author LIKE '%' || :keyword || '%'"),
+})
 public class Book implements java.io.Serializable {
 
 	private Integer bookId;
@@ -32,6 +49,7 @@ public class Book implements java.io.Serializable {
 	private String description;
 	private String isbn;
 	private byte[] image;
+	private String base64Image;
 	private float price;
 	private Date publishDate;
 	private Date lastUpdateTime;
@@ -68,6 +86,7 @@ public class Book implements java.io.Serializable {
 		this.reviews = reviews;
 		this.orderDetails = orderDetails;
 	}
+    
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -81,7 +100,7 @@ public class Book implements java.io.Serializable {
 		this.bookId = bookId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id", nullable = false)
 	public Category getCategory() {
 		return this.category;
@@ -182,5 +201,42 @@ public class Book implements java.io.Serializable {
 	public void setOrderDetails(Set<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
+    @Transient
+	public String getBase64Image() {
+		 this.base64Image = Base64.getEncoder().encodeToString(this.image);
+		 return  this.base64Image;
+	}
+    @Transient
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bookId == null) ? 0 : bookId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Book other = (Book) obj;
+		if (bookId == null) {
+			if (other.bookId != null)
+				return false;
+		} else if (!bookId.equals(other.bookId))
+			return false;
+		return true;
+	}
+	
+	
+	
 
 }

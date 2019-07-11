@@ -8,8 +8,8 @@ import com.bookbazzar.entity.Category;
 
 public class CategoryDAO extends jpaDAO<Category> implements GenericDAO<Category> {
 
-	public CategoryDAO(EntityManager entityManager) {
-		super(entityManager);
+	public CategoryDAO() {
+		
 
 	}
 

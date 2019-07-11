@@ -11,10 +11,13 @@
 </head>
 <body>
 	<div align="center">
+		<img alt="admin" src="../images/BookstoreAdminLogo.png">
+	</div>
+	<div align="center">
 		<h1>BookBazzar Administration</h1>
 	</div>
 	<div align="center">
-	<img alt="admin" src="../images/user.png"><br>
+		<img alt="admin" src="../images/user.png"><br>
 		<h2>Admin Login</h2>
 	</div>
 	<div align="center">
@@ -22,7 +25,7 @@
 	</div>
 	<div align="center">
 		<form action="login" method="post" id="loginForm">
-			<table  class="from">
+			<table class="from">
 				<tr>
 					<td>Email:</td>
 					<td><input type="email" name="email" id="email" ,size="20"></td>
