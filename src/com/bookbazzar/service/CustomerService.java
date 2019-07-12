@@ -45,8 +45,8 @@ public class CustomerService {
 		requestDispatcher.forward(request, response);
 	}
 	
-
 	public void createCustomer() throws ServletException, IOException {
+
 		String email = request.getParameter("email");
 		String message;
 		Customer existCustomer = customerDAO.findByEmail(email);
@@ -54,6 +54,66 @@ public class CustomerService {
 		if (existCustomer != null) {
 			message = "customer Could not create with this email:"+ email + "because its already exist";
 			listCustomers(message);
+		}else {
+		
+			Customer newCustomer = new Customer();
+			updateCustomerFieldsFromform(newCustomer);
+			customerDAO.create(newCustomer);
+			message = "New Customer has been created successfully";
+			listCustomers(message);
+		}
+		
+	}
+	
+	private void updateCustomerFieldsFromform(Customer customer) {
+		String email = request.getParameter("email");
+		String fullname = request.getParameter("fullname");
+		String password = request.getParameter("password");
+		String phone = request.getParameter("phone");
+		String address = request.getParameter("address");
+		String city = request.getParameter("city");
+		String zipcode = request.getParameter("zipcode");
+		String country = request.getParameter("country");
+		
+		customer.setEmail(email);
+		customer.setFullname(fullname);
+		customer.setPassword(password);
+		customer.setPhone(phone);
+		customer.setAddress(address);
+		customer.setCity(city);
+		customer.setZipcode(zipcode);
+		customer.setCountry(country);
+	}
+
+	public void editCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("id"));
+
+		Customer customer = customerDAO.get(customerId);
+
+		if (customer == null) {
+			String massage = "Could not find Customer with this : " + customerId;
+			request.setAttribute("message", massage);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
+			requestDispatcher.forward(request, response);
+		} else {
+			request.setAttribute("customer", customer);
+			String editPage = "customer_form.jsp";
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
+			requestDispatcher.forward(request, response);
+		}
+
+	}
+
+	public void updateCustomer() throws ServletException, IOException {
+		Integer customerId = Integer.parseInt(request.getParameter("customerId"));
+		
+		String email = request.getParameter("email");
+		String message;
+		Customer existCustomer = customerDAO.findByEmail(email);
+		if (existCustomer != null && existCustomer.getCustomerId() != customerId) {
+			message = "could not update the customer Because This customer with this email: "
+					+existCustomer.getEmail()+"is already Exist";
+			
 		}else {
 			String fullname = request.getParameter("fullname");
 			String password = request.getParameter("password");
@@ -63,28 +123,23 @@ public class CustomerService {
 			String zipcode = request.getParameter("zipcode");
 			String country = request.getParameter("country");
 			
-			Customer newcCustomer = new Customer();
-			newcCustomer.setEmail(email);
-			newcCustomer.setFullname(fullname);
-			newcCustomer.setPassword(password);
-			newcCustomer.setPhone(phone);
-			newcCustomer.setAddress(address);
-			newcCustomer.setCity(city);
-			newcCustomer.setZipcode(zipcode);
-			newcCustomer.setCountry(country);
+			Customer customer = customerDAO.get(customerId);
+			customer.setEmail(email);
+			customer.setFullname(fullname);
+			customer.setPassword(password);
+			customer.setPhone(phone);
+			customer.setAddress(address);
+			customer.setCity(city);
+			customer.setZipcode(zipcode);
+			customer.setCountry(country);
 			
-			customerDAO.create(newcCustomer);
-			message = "New Customer has been created successfully";
-			listCustomers(message);
+			customerDAO.update(customer);
+			message = "The customer has been updated successfully";
+			
 		}
+		listCustomers(message);
 		
 	}
-	
-	
-	
-	
-	
-	
 
 	public void deleteCustomer() throws ServletException, IOException {
 		Integer customerId = Integer.parseInt(request.getParameter("id"));
@@ -172,6 +227,21 @@ public class CustomerService {
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(profilePage);
 		requestDispatcher.forward(request, response);
 	}
+
+	public void showCustomerProfileEditForm() throws ServletException, IOException {
+		String editPage = "frontend/edit_customer_profile.jsp";
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(editPage);
+		requestDispatcher.forward(request, response);
+		
+	}
+
+	public void updateCustomerProfile() {
+		
+		
+	}
+
+	
+	
 
 	
 

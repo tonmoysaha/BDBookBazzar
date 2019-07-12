@@ -55,7 +55,7 @@
 					<td>${customer.zipcode }</td>
 					<td><fmt:formatDate pattern ='MM/dd/yyyy' value='${customer.registerDate}'/></td>
 					
-					<td><a href="edit_user?id=${customer.customerId}"><button>Update</button></a>
+					<td><a href="edit_customer?id=${customer.customerId}"><button>Update</button></a>
 						&nbsp; <a href="javascript:void(0);" class="deletelink" id="${customer.customerId}"><button>Delete</button></a></td>
 
 				</tr>
