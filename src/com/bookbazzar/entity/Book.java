@@ -2,9 +2,12 @@ package com.bookbazzar.entity;
 // Generated Feb 13, 2019 12:46:01 PM by Hibernate Tools 5.2.11.Final
 
 import java.util.Base64;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,19 +30,17 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "book", catalog = "bookstoredb", uniqueConstraints = @UniqueConstraint(columnNames = "title"))
-@NamedQueries({
-	@NamedQuery(name = "findAll.Book" , query ="SELECT b FROM Book b"),
-	@NamedQuery(name = "Book.findByTitle" , query = "SELECT b FROM Book b WHERE b.title = :title"),
-	@NamedQuery(name = "Book.countAll" , query = "SELECT COUNT(*) FROM Book b"),
-	@NamedQuery(name = "Book.countByCategory" , query = "SELECT COUNT(b) FROM Book b "
-	 +"WHERE b.category.categoryId = :catId"),
-	
-	@NamedQuery(name="Book.findByCategory" , query="SELECT b FROM Book b JOIN "+
-	"Category c ON b.category.categoryId = c.categoryId AND c.categoryId = :catId"),
-	@NamedQuery(name="Book.newBookList" , query="SELECT b FROM Book b ORDER BY b.publishDate DESC"),
-	@NamedQuery(name="Book.search",query="SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%'" 
-	+ " OR b.author LIKE '%' || :keyword || '%'"),
-})
+@NamedQueries({ @NamedQuery(name = "findAll.Book", query = "SELECT b FROM Book b"),
+		@NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title"),
+		@NamedQuery(name = "Book.countAll", query = "SELECT COUNT(*) FROM Book b"),
+		@NamedQuery(name = "Book.countByCategory", query = "SELECT COUNT(b) FROM Book b "
+				+ "WHERE b.category.categoryId = :catId"),
+
+		@NamedQuery(name = "Book.findByCategory", query = "SELECT b FROM Book b JOIN "
+				+ "Category c ON b.category.categoryId = c.categoryId AND c.categoryId = :catId"),
+		@NamedQuery(name = "Book.newBookList", query = "SELECT b FROM Book b ORDER BY b.publishDate DESC"),
+		@NamedQuery(name = "Book.search", query = "SELECT b FROM Book b WHERE b.title LIKE '%' || :keyword || '%'"
+				+ " OR b.author LIKE '%' || :keyword || '%'"), })
 public class Book implements java.io.Serializable {
 
 	private Integer bookId;
@@ -86,7 +87,11 @@ public class Book implements java.io.Serializable {
 		this.reviews = reviews;
 		this.orderDetails = orderDetails;
 	}
-    
+
+	public Book(Integer bookId) {
+		super();
+		this.bookId = bookId;
+	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -184,9 +189,18 @@ public class Book implements java.io.Serializable {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
 	public Set<Review> getReviews() {
-		return this.reviews;
+		TreeSet<Review> sortedReviews = new TreeSet<Review>(new Comparator<Review>() {
+
+			@Override
+			public int compare(Review review1, Review review2) {
+				
+				return review2.getReviewTime().compareTo(review1.getReviewTime());
+			}
+		});
+		sortedReviews.addAll(reviews);
+		return sortedReviews;
 	}
 
 	public void setReviews(Set<Review> reviews) {
@@ -201,14 +215,68 @@ public class Book implements java.io.Serializable {
 	public void setOrderDetails(Set<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
 	}
-    @Transient
+
+	@Transient
 	public String getBase64Image() {
-		 this.base64Image = Base64.getEncoder().encodeToString(this.image);
-		 return  this.base64Image;
+		this.base64Image = Base64.getEncoder().encodeToString(this.image);
+		return this.base64Image;
 	}
-    @Transient
+
+	@Transient
 	public void setBase64Image(String base64Image) {
 		this.base64Image = base64Image;
+	}
+	
+	@Transient
+	public float getAverageRating() {
+		float averageRating = 0.0f;
+		float sum = 0.0f;
+		
+		if (reviews.isEmpty()) {
+			return 0.0f;
+		}
+		
+		for (Review review : reviews) {
+			sum += review.getRating();
+		}
+		averageRating = sum / reviews.size();
+		
+		return averageRating;
+		
+	}
+	
+	@Transient
+	public String getRatingStars() {
+		
+		float avarageRating = getAverageRating();
+		
+		return getRatingString(avarageRating);
+		
+	}
+	
+	@Transient
+	public String getRatingString(float averageRating) {
+		String result = "";
+		
+		int numberOfStar = (int) averageRating;
+		
+		for (int i = 0; i < numberOfStar; i++) {
+			result += "on,";
+		}
+		int next = numberOfStar + 1 ;
+		
+		if (averageRating > numberOfStar) {
+			result += "half,";
+			next++;
+		}
+		
+		for (int j = next; j <= 5; j++) {
+			
+			result += "off,";
+		}
+		
+		return result.substring(0 ,result.length()-1);
+		
 	}
 
 	@Override
@@ -235,8 +303,5 @@ public class Book implements java.io.Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }

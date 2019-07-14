@@ -75,9 +75,13 @@ public class CustomerService {
 		String zipcode = request.getParameter("zipcode");
 		String country = request.getParameter("country");
 		
-		customer.setEmail(email);
+		if (email != null && !email.equals("")) {
+			customer.setEmail(email);
+		}
 		customer.setFullname(fullname);
-		customer.setPassword(password);
+		if (password != null && !password.equals("")) {
+			customer.setPassword(password);
+		}
 		customer.setPhone(phone);
 		customer.setAddress(address);
 		customer.setCity(city);
@@ -115,25 +119,9 @@ public class CustomerService {
 					+existCustomer.getEmail()+"is already Exist";
 			
 		}else {
-			String fullname = request.getParameter("fullname");
-			String password = request.getParameter("password");
-			String phone = request.getParameter("phone");
-			String address = request.getParameter("address");
-			String city = request.getParameter("city");
-			String zipcode = request.getParameter("zipcode");
-			String country = request.getParameter("country");
-			
-			Customer customer = customerDAO.get(customerId);
-			customer.setEmail(email);
-			customer.setFullname(fullname);
-			customer.setPassword(password);
-			customer.setPhone(phone);
-			customer.setAddress(address);
-			customer.setCity(city);
-			customer.setZipcode(zipcode);
-			customer.setCountry(country);
-			
-			customerDAO.update(customer);
+			Customer customerById = customerDAO.get(customerId);
+			updateCustomerFieldsFromform(customerById);
+			customerDAO.update(customerById);
 			message = "The customer has been updated successfully";
 			
 		}
@@ -167,25 +155,9 @@ public class CustomerService {
 			message = " Could not Register with this email:"+ email + "because its already exist";
 			
 		}else {
-			String fullname = request.getParameter("fullname");
-			String password = request.getParameter("password");
-			String phone = request.getParameter("phone");
-			String address = request.getParameter("address");
-			String city = request.getParameter("city");
-			String zipcode = request.getParameter("zipcode");
-			String country = request.getParameter("country");
-			
-			Customer newcCustomer = new Customer();
-			newcCustomer.setEmail(email);
-			newcCustomer.setFullname(fullname);
-			newcCustomer.setPassword(password);
-			newcCustomer.setPhone(phone);
-			newcCustomer.setAddress(address);
-			newcCustomer.setCity(city);
-			newcCustomer.setZipcode(zipcode);
-			newcCustomer.setCountry(country);
-			
-			customerDAO.create(newcCustomer);
+			Customer newCustomer = new Customer();
+			updateCustomerFieldsFromform(newCustomer);
+			customerDAO.create(newCustomer);
 			message = "you have registered successfully, Thank you!<br/>"
 					+"please Click Here To Log In the Page <br/>"+
 					"<a href ='login.jsp' align='center'>Sign In</a>";
@@ -235,9 +207,11 @@ public class CustomerService {
 		
 	}
 
-	public void updateCustomerProfile() {
-		
-		
+	public void updateCustomerProfile() throws ServletException, IOException {
+		Customer customer = (Customer) request.getSession().getAttribute("loggedcustomer");
+		updateCustomerFieldsFromform(customer);
+		customerDAO.update(customer);
+		showCustomerProfile();
 	}
 
 	

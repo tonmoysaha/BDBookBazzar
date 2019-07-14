@@ -1,4 +1,4 @@
-<div align="center" style="clear: both;">
+<div align="center" style="clear: both;" class="footer">
 	<h3>Copyright(c) 2018 by Bd BookBazzar Company Ltd.</h3>
 	<a href="about">About Us</a> |
 	<a href="contact">Contact Us</a> |

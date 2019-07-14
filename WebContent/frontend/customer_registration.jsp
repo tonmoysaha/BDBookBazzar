@@ -12,13 +12,11 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-		<h2 class="pageheading">Customer Registration</h2>
+	<div style="background-color: #323256; color: white; padding-top: 2px;width: 40%;text-align: center; margin-left:400px; padding-bottom: 5px;">
+		<h2>Customer Registration</h2>
 	</div>
 	<div align="center">
-		
 			<form action="register_customer" method="post" id="customerform">
-			
 		<table class="from">
 			<tr>
 				<td>&nbsp;</td>

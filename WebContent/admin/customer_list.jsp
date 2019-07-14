@@ -12,14 +12,15 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-		<h2  class="pageheading">Customers Management</h2>
+	<div align="center"  class="tabledataheading">
+		<h2>Customers Management</h2>
+		<img alt="customer" src="../images/customer.png" />
 		<h3>
 			<a href="customer_form.jsp">Create New Customer</a>
 		</h3>
 	</div>
 	<c:if test="${message != null}">
-		<div align="center">
+		<div align="center" style="background-color: #f9fece;">
 			<!-- from User services method-->
 			<h4 class="massage">
 				${message}
@@ -27,7 +28,7 @@
 		</div>
 	</c:if>
 
-	<div align="center">
+	<div align="center" class="tabledata">
 		<table border="1">
 			<tr>
 				<th>Index</th>

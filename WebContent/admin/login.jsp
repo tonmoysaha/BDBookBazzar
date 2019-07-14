@@ -10,22 +10,24 @@
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
-	<div align="center">
+    <div class="wholeloginpage">
+	<div align="center" style="background-color: black;">
 		<img alt="admin" src="../images/BookstoreAdminLogo.png">
 	</div>
-	<div align="center">
+	
+	<div class="loginheading">
+	    <div align="center">
 		<h1>BookBazzar Administration</h1>
-	</div>
-	<div align="center">
-		<img alt="admin" src="../images/user.png"><br>
+	   </div>
+		<img alt="admin" src="../images/employee.jpg" width="70" height="60"><br>
 		<h2>Admin Login</h2>
 	</div>
 	<div align="center">
 		<h2 class="errormsg">${message}</h2>
 	</div>
-	<div align="center">
+	<div align="center" class="loginpage">
 		<form action="login" method="post" id="loginForm">
-			<table class="from">
+			<table class="login">
 				<tr>
 					<td>Email:</td>
 					<td><input type="email" name="email" id="email" ,size="20"></td>
@@ -44,6 +46,8 @@
 			</table>
 		</form>
 	</div>
+	</div>
+		<jsp:directive.include file="footer.jsp" />
 </body>
 <script type="text/javascript">
 	$(document).ready(function() {

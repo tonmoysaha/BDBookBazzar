@@ -176,19 +176,31 @@ public class BookService {
 	public void deleteBook() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
 		Book book = bookDAO.get(bookId);
+		
 		if (book == null) {
 			String message = "This Book is not Found With This Id '" + bookId + "'";
 			request.setAttribute("message", message);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 			requestDispatcher.forward(request, response);
 			return;
+		}else {
+			if (!book.getReviews().isEmpty()) {
+				String message = "The Book could not Delete with this title '" + book.getTitle()+
+						"'because it has reviews";
+				request.setAttribute("message", message);
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
+				requestDispatcher.forward(request, response);
+				return;
+			}
+			else {
+				bookDAO.delete(bookId);
+
+				String massage = "The book has been deleted succeddfully";
+
+				listBook(massage);
+
+			}
 		}
-		bookDAO.delete(bookId);
-
-		String massage = "The book has been deleted succeddfully";
-
-		listBook(massage);
-
 	}
 
 	public void listBooksByCategory() throws ServletException, IOException {

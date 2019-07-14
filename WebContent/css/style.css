@@ -11,14 +11,14 @@ img {
 	size: 25px;
 }
 a:link {
-	color: blue;
+	color: white;
 	text-decoration: none;
 }
 a:visited {
-	color: indigo;
+	color: #87ebfa;
 }
 a:hover {
-	color: blue;
+	color: 	#87cefa;
 	text-decoration: underline;
 	
 }
@@ -28,12 +28,11 @@ a:active {
 #headermanu a:link {
 	font-size: larger;
 }
-.pageheading {
-	color: darkblue;
-}
+
 table {
 	border: 1px solid black;
-	border-collapse: collapse; 
+	border-collapse: collapse;
+	border-color:transparent; 
 }
 th,td {
 	padding: 10px;
@@ -49,8 +48,62 @@ table.from{
 	width: 60%;
 	text-align: center;
 }
+.wholeloginpage{
+	background-color: #191941;
+	padding-bottom:30px;
+}
+
+table.login{
+	border: none;
+	padding: 4px;
+	text-align: center;
+	font-style: italic;
+	
+	
+}
+.loginpage {
+	background-color: #7abfff;
+	width: 600px;
+	height: 200px;
+	padding-top: 70px;
+	margin-left: 450px;
+}
+.loginheading{
+	text-align: center;
+	background-color: #F0E68C;
+	width:800px;
+	margin-left:350px;
+	padding-bottom: 5px;
+	padding-top:5px;
+}
+.tabledata{
+	background-color: #b3e0f2;
+	padding-bottom: 50px;
+	padding-top: 50px;
+	font-style:italic;
+	font-weight:bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.tabledataheading{
+	background-color: #323256;
+	padding-top:5px;
+	padding-bottom:5px;
+	color:white;
+	width:50%;
+	margin-left:370px;
+}
+.footer{
+	color: white;
+	background-color: black;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 button {
-	border-radius: 6px;
+	border-radius: 00px;
+	padding:3px;
+	background-color:white;
+	font-style:italic;
+	font-weight:bold;
 }
 button[type=submit] {
 	font-weight: bold;

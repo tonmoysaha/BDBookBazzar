@@ -1,7 +1,7 @@
 
 <!-- Header part -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<div style="background-color: black; color: white; padding-bottom: 20px;">
 <div class="center">
     <a href="${pageContext.request.contextPath}/">
 	<img src="images/BookstoreLogo.png">
@@ -45,4 +45,5 @@
 		<c:if test="${not status.last}"></c:if>
 	&nbsp; | &nbsp;
 	</c:forEach>
+</div>
 </div>

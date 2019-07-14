@@ -12,15 +12,16 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-		<h2 class="pageheading">Category Management</h2>
+	<div align="center" class="tabledataheading">
+		<h2>Category Management</h2>
+		<img alt="Category" src="../images/category.png" />
 		<h3>
 			<a href="category_form.jsp">Create New Category</a>
 		</h3>
 	</div>
 	<!-- calling from catogoryservice list catrgory method -->
 	<c:if test="${massage != null}">
-		<div align="center">
+		<div align="center" style="background-color: #f9fece;">
 			<!-- from User services method-->
 			<h4 class="massage">
 				${massage}
@@ -28,8 +29,8 @@
 		</div>
 	</c:if>
 
-	<div align="center">
-		<table border="1">
+	<div align="center" class="tabledata">
+		<table border="1" ">
 			<tr>
 				<th>Index</th>
 				<th>ID</th>

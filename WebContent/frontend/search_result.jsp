@@ -40,7 +40,7 @@
 									<a href="view_book?id=${book.bookId}"> By ${book.title} </a>
 								</h2>
 							</div>
-							<div>Ratings ****</div>
+							<div><jsp:directive.include file="book_rating.jsp"/></div>
 							<div>
 								<i>by ${book.author}</i>
 							</div>
@@ -54,7 +54,7 @@
 								<b>Tk. ${book.price}</b>
 							</h3>
 							<h3>
-								<a href="#">Add to Cart</a>
+								<a href="#" style="color: blue;">Add to Cart</a>
 							</h3>
 						</div>
 					</div>

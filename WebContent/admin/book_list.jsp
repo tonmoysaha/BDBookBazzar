@@ -13,14 +13,15 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-		<h2  class="pageheading">Books Management</h2>
+	<div align="center" class="tabledataheading">
+		<h2>Books Management</h2>
+		<img alt="books" src="../images/book.jpg" />
 		<h3>
 			<a href="new_book">Create New Book</a>
 		</h3>
 	</div>
 	<c:if test="${massage != null}">
-		<div align="center">
+		<div align="center" style="background-color: #f9fece;">
 			<!-- from User services method-->
 			<h4 class="massage">
 				${massage}
@@ -28,7 +29,7 @@
 		</div>
 	</c:if>
 
-	<div align="center">
+	<div align="center" class="tabledata">
 		<table border="1">
 			<tr>
 				<th>Index</th>

@@ -10,13 +10,13 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-	    <br>
-		<div align="center" style="width: 80%; margin: 0 auto;">
+	<div align="center" style="background-color: #f1fc90;padding-top: 5px;padding-bottom: 5px;">
+		<div align="center" style="width: 80%; margin: 0 auto;  ">
+		<div>
 		<h2>New Books</h2>
+		</div>
 			<c:forEach items="${listNewBooks}" var="book">
-				<div style="display: inline-block; margin: 20px;"
-					align="center">
+				<div style="display: inline-block; margin: 20px;" align="center">
 					<div>
 						<a href="view_book?id=${book.bookId}"> <img
 							src="data:image/jpg;base64,${book.base64Image}" width="128"
@@ -24,9 +24,14 @@
 						</a>
 					</div>
 					<div>
-						<a href="view_book?id=${book.bookId}"> By ${book.title} </a>
+						<a href="view_book?id=${book.bookId}" style="color: black;"> ${book.title} </a>
 					</div>
-					<div>Ratings ****</div>
+					<div>
+					<jsp:directive.include file="book_rating.jsp"/>
+					
+						<!-- From book entity class public String getRatingStars() -->
+					</div>
+
 					<div align="center">
 						<i>${book.author}</i>
 					</div>
