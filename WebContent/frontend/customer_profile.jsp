@@ -9,11 +9,18 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
+	<div align="center" class="tabledataheading">
+		<h2>
+			<b><i>Welcome, ${loggedcustomer.fullname}</i></b>
+		</h2>
+		<img src="images/Profile-logo.png">
+	</div>
+	<div align="center"
+		style="padding-bottom: 10px; background-color: #87CEFA;">
 		<br>
-		<h2>Welcome, ${loggedcustomer.fullname}</h2>
-		<br>
-		<table class="normal" >
+
+
+		<table class="normal">
 			<tr>
 				<td><b>E-mail Address:</b></td>
 				<td>${loggedcustomer.email}</td>
@@ -41,13 +48,12 @@
 			<tr>
 				<td><b>Country:</b></td>
 				<td>${loggedcustomer.country}</td>
-			</tr>
-			<tr><td>&nbsp;</td></tr>
-			<br>
+				<br>
 			<tr>
-			<td colspan="2" align="center"><a href="edit_profile">Update My profile</a></td>
+				<td><a style="color: blue; margin-left: 100px;"
+					href="edit_profile"><b><i>Update My profile</i></b></a></td>
 			</tr>
-			
+
 		</table>
 	</div>
 

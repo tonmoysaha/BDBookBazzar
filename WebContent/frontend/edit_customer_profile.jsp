@@ -13,10 +13,11 @@
 <body>
 	<jsp:directive.include file="header.jsp" />
 	
-	<div align="center">
-		<h2 class="pageheading">Update Profile</h2>
+	<div align="center" class="tabledataheading">
+		<h2>Update Profile</h2>
+		<img src="images/Profile-logo.png">
 	</div>
-	<div align="center">
+	<div align="center" style="background-color: #87CEFA;">
 		
 			<form action="update_profile" method="post" id="customerform">
 			

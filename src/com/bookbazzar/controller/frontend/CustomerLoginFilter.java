@@ -16,7 +16,8 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/*")
 public class CustomerLoginFilter implements Filter {
 
-	private static final String[] loginRequiredURLs = { "/view_profile", "/update_profile", "/edit_profile" };
+	private static final String[] loginRequiredURLs = { "/view_profile", "/update_profile", "/edit_profile",
+			"/write_review", "/palce_order", "/checkout", "/show_order_detail", "/view_orders"};
 
 	public CustomerLoginFilter() {
 		// TODO Auto-generated constructor stub
@@ -29,20 +30,20 @@ public class CustomerLoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession(false);
 
 		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
-		if (!path.startsWith("/admin/")) {
+		if (path.startsWith("/admin/")) {
 			chain.doFilter(request, response);
 			return;
 		}
 
 		boolean logedIn = session != null && session.getAttribute("loggedcustomer") != null;
+		
 		String requestURL = httpRequest.getRequestURL().toString();
 
 		if (!logedIn && isLoginRequired(requestURL)) {
-
+			session.setAttribute("redirectURL", requestURL);
 			String loginPage = "frontend/login.jsp";
 			RequestDispatcher requestDispatcher = httpRequest.getRequestDispatcher(loginPage);
 			requestDispatcher.forward(request, response);

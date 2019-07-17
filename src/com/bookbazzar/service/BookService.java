@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 
 import com.bookbazzar.dao.BookDAO;
 import com.bookbazzar.dao.CategoryDAO;
+import com.bookbazzar.dao.OrderDAO;
 import com.bookbazzar.entity.Book;
 import com.bookbazzar.entity.Category;
 
@@ -176,29 +177,37 @@ public class BookService {
 	public void deleteBook() throws ServletException, IOException {
 		Integer bookId = Integer.parseInt(request.getParameter("id"));
 		Book book = bookDAO.get(bookId);
-		
+
 		if (book == null) {
 			String message = "This Book is not Found With This Id '" + bookId + "'";
 			request.setAttribute("message", message);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 			requestDispatcher.forward(request, response);
 			return;
-		}else {
+		} else {
 			if (!book.getReviews().isEmpty()) {
-				String message = "The Book could not Delete with this title '" + book.getTitle()+
-						"'because it has reviews";
+				String message = "The Book could not Delete with this title '" + book.getTitle()
+						+ "'because it has reviews";
 				request.setAttribute("message", message);
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 				requestDispatcher.forward(request, response);
 				return;
-			}
-			else {
-				bookDAO.delete(bookId);
+			} else {
+				OrderDAO orderDAO = new OrderDAO();
+				long countByOrder = orderDAO.countOrderDetailByBook(bookId);
 
-				String massage = "The book has been deleted succeddfully";
+				if (countByOrder > 0) {
+					String massage = "Could not delete book with ID " + bookId
+							+ " because there are orders associated with it.";
+					listBook(massage);
+				} else {
+					bookDAO.delete(bookId);
 
-				listBook(massage);
+					String massage = "The book has been deleted succeddfully";
 
+					listBook(massage);
+
+				}
 			}
 		}
 	}
@@ -259,5 +268,7 @@ public class BookService {
 		requestDispatcher.forward(request, response);
 
 	}
+	
+	
 
 }

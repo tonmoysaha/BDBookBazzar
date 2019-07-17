@@ -8,14 +8,15 @@
 <meta charset="ISO-8859-1">
 <title>Book List For-${keyword}</title>
 <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
-
+        <div align="center">
 		<c:if test="${fn:length(searchBook)==0}">
 			<h2>No result For ${keyword}</h2>
 		</c:if>
+		</div>
 
 		<c:if test="${fn:length(searchBook) > 0}">
 
@@ -53,15 +54,14 @@
 							<h3>
 								<b>Tk. ${book.price}</b>
 							</h3>
-							<h3>
-								<a href="#" style="color: blue;">Add to Cart</a>
+							<h3 style="color: blue;">
+								<a href="add_to_cart?book_id=${book.bookId}">Add To Cart</a>
 							</h3>
 						</div>
 					</div>
 				</c:forEach>
 	</div>
 	</c:if>
-
-		<jsp:directive.include file="footer.jsp" />
+ <jsp:directive.include file="footer.jsp" />
 </body>
 </html>

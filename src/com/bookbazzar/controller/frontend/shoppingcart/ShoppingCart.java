@@ -36,20 +36,26 @@ public class ShoppingCart {
 		return totall;
 	}
 
-	public double getTotallAmount() {
-		double totall = 0.0f;
+	public float getTotallAmount() {
+		float totall = 0.0f;
 
 		Iterator<Book> iterator = cart.keySet().iterator();
 
 		while (iterator.hasNext()) {
 			Book book = iterator.next();
 			Integer quantity = cart.get(book);
-			double subTotall = quantity * book.getPrice();
+			float subTotall = quantity * book.getPrice();
 			totall += subTotall;
 		}
 		return totall;
 	}
-	
+	public void UpdateCart(int[] bookIds, int[] quantities) {
+		for (int i = 0; i < bookIds.length; i++) {
+			Book key = new Book(bookIds[i]);
+			Integer value = quantities[i];
+			cart.put(key, value);
+		}
+	}
 	public void clear() {
 		cart.clear();
 	}

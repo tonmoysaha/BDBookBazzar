@@ -164,5 +164,8 @@ div.next-row {
 img.book-small {
 	width: 128px;
 	height: 164px;
-
+}
+.book-title{
+	font-size: x-large;
+	font-weight: bold;
 }

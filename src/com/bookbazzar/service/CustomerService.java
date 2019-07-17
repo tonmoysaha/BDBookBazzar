@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bookbazzar.dao.CustomerDAO;
+import com.bookbazzar.dao.OrderDAO;
+import com.bookbazzar.dao.ReviewDAO;
 import com.bookbazzar.entity.Customer;
 
 public class CustomerService {
@@ -134,17 +136,41 @@ public class CustomerService {
 		String message;
 		Customer customer = customerDAO.get(customerId);
 		if (customer == null) {
-			message = "The customer cou;d not found with this id"+customerId;
+			message = "The customer cou;d not found with this id" + customerId;
 			request.setAttribute("message", message);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("massage.jsp");
 			requestDispatcher.forward(request, response);
 			return;
 		}
-		customerDAO.delete(customerId);
-		 message = "This Customer has been deleted successfully with this email" + customer.getEmail();
-		listCustomers(message);
-		
+		if (customer != null) {
+			ReviewDAO reviewDAO = new ReviewDAO();
+			long reviewCount = reviewDAO.countByCustomer(customerId);
+
+			if (reviewCount > 0) {
+				message = "Could not delete customer with ID " + customerId
+						+ " because he/she posted reviews for books.";
+				listCustomers(message);
+				return;
+
+			} else {
+				OrderDAO orderDAO = new OrderDAO();
+				long orderCount = orderDAO.countByCustomer(customerId);
+
+				if (orderCount > 0) {
+					message = "Could not delete customer with ID " + customerId + " because he/she placed orders.";
+					listCustomers(message);
+				} else {
+					customerDAO.delete(customerId);
+					message = "This Customer has been deleted successfully with this email" + customer.getEmail();
+					listCustomers(message);
+				}
+			}
+		}
+
 	}
+		
+		
+	
 
 	public void registerCustomer() throws ServletException, IOException {
 		String email = request.getParameter("email");

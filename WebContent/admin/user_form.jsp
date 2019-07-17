@@ -7,17 +7,17 @@
 <meta charset="ISO-8859-1">
 <title>Create New User</title>
 <link rel="stylesheet" href="../css/style.css">
-<script type="text/javascript" src="../js/jquery-3.3.1.min.js" ></script>
+<script type="text/javascript" src="../js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
 	<div align="center">
 		<c:if test="${user != null }">
-			<h2  class="pageheading">Update User</h2>
+			<h2 class="pageheading">Update User</h2>
 		</c:if>
 		<c:if test="${user == null}">
-			<h2  class="pageheading">Create New User</h2>
+			<h2 class="pageheading">Create New User</h2>
 		</c:if>
 
 	</div>
@@ -49,18 +49,23 @@
 					id="password" value="${user.password}"></td>
 			</tr>
 			<tr>
+				<td align="right">Confirm Password:</td>
+				<td align="left"><input type="password" name="confirmpassword"
+					id="confirmpassword" ></td>
+			</tr>
+			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
-				&nbsp;&nbsp;<button type="submit">register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button id="cancelbutton">cancel</button>
+				<td colspan="2" align="center">&nbsp;&nbsp;
+					<button type="submit">register</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<button id="cancelbutton">cancel</button>
 				</td>
 			</tr>
 		</table>
-	
+
 		</form>
-		
+
 	</div>
 	<jsp:directive.include file="footer.jsp" />
 </body>
@@ -75,6 +80,11 @@
     			},
     				fullname: "required",
     					password: "required",
+    					confirmpassword: {
+    						required: true,
+    						equalTo: "#password"
+    						
+    					},
     		},
     		messages: {
     			email: {
@@ -82,6 +92,10 @@
     				email: "please enter a valid email address"
     			},
     			fullname: "please enter your fullname",
+    			confirmpassword: {
+    				required: "please Confirm Password",
+    				equalTo: "Confirm Password does not match"
+    			},
     			password: "please enter your password",
     		
     		}

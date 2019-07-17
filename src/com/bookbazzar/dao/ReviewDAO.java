@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.Receiver;
+
 import com.bookbazzar.entity.Review;
 
 public class ReviewDAO extends jpaDAO<Review> implements GenericDAO<Review> {
@@ -58,6 +60,15 @@ public class ReviewDAO extends jpaDAO<Review> implements GenericDAO<Review> {
 		}
 		return null;
 		
+		
+	}
+
+	public long countByCustomer(Integer customerId) {
+		// TODO Auto-generated method stub
+		return super.countWithNamedQuery("Review.countByCustomer", "customerId", customerId);
+	}
+	public List<Review> listMostRecentReviews(){
+		return super.findWithNamedQery("Review.findAll", 0, 5);
 		
 	}
 

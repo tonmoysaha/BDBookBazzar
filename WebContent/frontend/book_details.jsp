@@ -8,6 +8,7 @@
 <meta charset="ISO-8859-1">
 <title>${book.title}-details</title>
 <link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
 
 </head>
 <body>
@@ -31,7 +32,7 @@
 				</td>
 
 				<td valign="top" rowspan="2" width="20%">${book.price}<br />
-					<button type="submit">Add to cart</button>
+					<button id="AddButtonToCart">Add to cart</button>
 				</td>
 			</tr>
 
@@ -47,7 +48,7 @@
 				<!--  <td><h2><a id="reviews">Customer Reviews</a></h2></td> -->
 				<td><b><a id="reviews">Customer Reviews</a></b></td>
 				<td align="center">
-					<button type="submit">Write a Customer Review</button>
+					<button id="writereview">Write a Customer Review</button>
 				</td>
 			</tr>
 			<tr>
@@ -88,7 +89,17 @@
 		</table>
 
 	</div>
-
 	<jsp:directive.include file="footer.jsp" />
+	<script type="text/javascript">
+	 $(document).ready(function(){
+		 $("#writereview").click(function(){
+			 window.location='write_review?book_id='+${book.bookId};
+	    	});
+		 $("#AddButtonToCart").click(function(){
+			 window.location='add_to_cart?book_id='+${book.bookId};
+	    	});
+	 });
+	
+	</script>
 </body>
 </html>

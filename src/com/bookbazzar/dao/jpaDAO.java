@@ -95,6 +95,19 @@ public class jpaDAO<E> {
 		// list all data
 
 	}
+	public List<Object[]> findWithNamedQeryObject(String queryName,int fristResult,int maxResult) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		Query query = entityManager.createNamedQuery(queryName);
+		query.setFirstResult(fristResult);
+		query.setMaxResults(maxResult);
+		
+		List<Object[]> result = query.getResultList();
+		entityManager.close();
+		return result;
+		// list all data
+
+	}
 
 	public List<E> findWithNamedQery(String queryName, String paramName, Object paramValue) {
 

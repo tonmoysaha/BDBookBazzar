@@ -9,7 +9,7 @@
 </head>
 <body>
 	<jsp:directive.include file="header.jsp" />
-	<div align="center">
+	<div align="center" style="background-color: #FFFFE0; color: red;padding: 145px;">
 		<h2>${message}</h2>
 	</div>
 	
